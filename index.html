@@ -24,6 +24,8 @@
     <input type="submit" value="제출">
   </form>
 
+  <button id="moreButton" style="background-color: red; color: white;">좋아요</button>
+
   <script>
     document.getElementById('ageForm').addEventListener('submit', function(event) {
       event.preventDefault(); // 폼 제출 방지
@@ -37,8 +39,40 @@
         'age_range': ageRange
       });
     });
-  </script>
 
+    // 여기에 추가 이벤트 추적 코드를 넣으세요
+    document.getElementById('ageForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var age = document.getElementById('age').value;
+    var userId = '사용자_고유_ID'; // 실제 사용자 ID를 여기에 할당합니다.
+    var ageRange = Math.floor(age / 10) * 10 + "-" + (Math.floor(age / 10) * 10 + 9);
+
+    // 사용자 ID와 함께 이벤트를 추적합니다.
+    gtag('event', 'age_range_submission', {
+      'user_id': userId, // 사용자 ID를 추가합니다.
+      'age_range': ageRange
+    });
+  });
+
+
+
+    window.addEventListener('scroll', function() {
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        gtag('event', 'scroll_to_bottom', {
+          'event_category': 'engagement',
+          'event_label': 'scroll_bottom'
+        });
+      }
+    });
+
+    document.getElementById('moreButton').addEventListener('click', function() {
+      gtag('event', 'click_more_button', {
+        'event_category': 'engagement',
+        'event_label': 'more_button'
+      });
+    });
+
+  </script>
 
 <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
 
